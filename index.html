@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weekday Clock – A Clock for people who don't work or go to school to know the weekday</title>
+  <meta name="description" content="A beautifully styled vintage clock that shows the current weekday with an analog-style wooden design.">
+  <meta name="keywords" content="weekday clock, analog weekday, wooden clock, vintage clock HTML, CSS clock, JavaScript clock, 7-day dial">
+  <meta name="author" content="1link.fun">
+  <style>
+    body {
+      background: #f5f2e8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      font-family: 'Georgia', serif;
+      margin: 0;
+      color: #3e2a1a;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .description {
+      font-size: 18px;
+      text-align: center;
+      max-width: 600px;
+      margin-bottom: 40px;
+      color: #4b3828;
+    }
+
+    .clock {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle at center, #8b5e3c 0%, #5c3a21 100%);
+      border: 12px solid #3e2a1a;
+      border-radius: 50%;
+      position: relative;
+      box-shadow: inset 0 0 20px #3e2a1a, 0 8px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .center-dot {
+      width: 16px;
+      height: 16px;
+      background: #222;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 5;
+    }
+
+    .label {
+      position: absolute;
+      color: #fcebd2;
+      font-size: 14px;
+      font-weight: bold;
+      text-shadow: 2px 2px 3px #000;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .hand {
+      position: absolute;
+      width: 6px;
+      height: 160px;
+      background: #222;
+      top: 40px;
+      left: 50%;
+      transform-origin: bottom center;
+      transform: rotate(0deg);
+      border-radius: 3px;
+      z-index: 4;
+      box-shadow: 0 0 6px #000;
+    }
+
+    .sector-line {
+      position: absolute;
+      width: 2px;
+      height: 180px;
+      background-color: rgba(255, 255, 255, 0.4);
+      top: 20px;
+      left: 50%;
+      transform-origin: bottom center;
+      z-index: 1;
+    }
+
+    section.seo {
+      max-width: 700px;
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 1px solid #ccc;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 14px;
+      color: #7a6c5d;
+    }
+  </style>
+</head>
+<body>
+  <h1>Weekday Clock</h1>
+  <p class="description">
+    A clock for people who don't work or go to school anymore, in case they forgot what weekday it is.
+  </p>
+
+  <div class="clock">
+    <div class="hand" id="dayHand"></div>
+    <div class="center-dot"></div>
+
+    <script>
+      const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      const clock = document.querySelector(".clock");
+      const sectorAngle = 360 / 7;
+
+      for (let i = 0; i < 7; i++) {
+        const baseAngle = sectorAngle * i;
+
+        // Add sector line
+        const sector = document.createElement("div");
+        sector.className = "sector-line";
+        sector.style.transform = `rotate(${baseAngle}deg)`;
+        clock.appendChild(sector);
+
+        // Add label in middle of each sector
+        const label = document.createElement("div");
+        label.className = "label";
+
+        const midAngle = baseAngle + sectorAngle / 2;
+        const radius = 100;
+        const rad = (midAngle - 90) * Math.PI / 180;
+        const x = 200 + radius * Math.cos(rad);
+        const y = 200 + radius * Math.sin(rad);
+        label.style.left = `${x}px`;
+        label.style.top = `${y}px`;
+        label.textContent = days[i];
+        clock.appendChild(label);
+      }
+
+      function updatePointer() {
+        const now = new Date();
+        const day = now.getDay();
+        const angle = (360 / 7) * day + (360 / 14); // center of sector
+        document.getElementById("dayHand").style.transform = `rotate(${angle}deg)`;
+      }
+
+      updatePointer();
+    </script>
+  </div>
+
+  <footer>
+    &copy; 2025 <a href="https://1link.fun" target="_blank">可能是东半球最有趣的中文科技周刊: 1link.fun</a>
+  </footer>
+</body>
+</html>
