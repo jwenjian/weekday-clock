@@ -104,6 +104,16 @@
       font-size: 14px;
       color: #7a6c5d;
     }
+
+    .clock-only-mode h1,
+    .clock-only-mode .description,
+    .clock-only-mode footer {
+      display: none;
+    }
+
+    .clock-only-mode {
+      padding: 20px;
+    }
   </style>
 </head>
 <body>
@@ -120,6 +130,12 @@
       const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
       const clock = document.querySelector(".clock");
       const sectorAngle = 360 / 7;
+
+      // Check for clockonly query parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has('clockonly')) {
+        document.body.classList.add('clock-only-mode');
+      }
 
       for (let i = 0; i < 7; i++) {
         const baseAngle = sectorAngle * i;
