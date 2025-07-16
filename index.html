@@ -13,10 +13,12 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: flex-start;
       padding: 40px 20px;
       font-family: 'Georgia', serif;
       margin: 0;
       color: #3e2a1a;
+      box-sizing: border-box;
     }
 
     h1 {
@@ -34,8 +36,10 @@
     }
 
     .clock {
-      width: 400px;
-      height: 400px;
+      width: min(400px, 90vw);
+      height: min(400px, 90vw);
+      max-width: 400px;
+      max-height: 400px;
       background: radial-gradient(circle at center, #8b5e3c 0%, #5c3a21 100%);
       border: 12px solid #3e2a1a;
       border-radius: 50%;
@@ -68,9 +72,9 @@
     .hand {
       position: absolute;
       width: 6px;
-      height: 160px;
+      height: 40%;
       background: #222;
-      top: 40px;
+      top: 10%;
       left: 50%;
       transform-origin: bottom center;
       transform: rotate(0deg);
@@ -82,9 +86,9 @@
     .sector-line {
       position: absolute;
       width: 2px;
-      height: 180px;
+      height: 45%;
       background-color: rgba(255, 255, 255, 0.4);
-      top: 20px;
+      top: 5%;
       left: 50%;
       transform-origin: bottom center;
       z-index: 1;
@@ -151,12 +155,13 @@
         label.className = "label";
 
         const midAngle = baseAngle + sectorAngle / 2;
-        const radius = 100;
+        // Use percentage-based positioning relative to the clock container
+        const radius = 35; // 35% from center
         const rad = (midAngle - 90) * Math.PI / 180;
-        const x = 200 + radius * Math.cos(rad);
-        const y = 200 + radius * Math.sin(rad);
-        label.style.left = `${x}px`;
-        label.style.top = `${y}px`;
+        const x = 50 + radius * Math.cos(rad); // 50% + offset
+        const y = 50 + radius * Math.sin(rad); // 50% + offset
+        label.style.left = `${x}%`;
+        label.style.top = `${y}%`;
         label.textContent = days[i];
         clock.appendChild(label);
       }
