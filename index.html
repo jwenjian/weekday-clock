@@ -148,11 +148,23 @@
       function updatePointer() {
         const now = new Date();
         const day = now.getDay();
-        const angle = (360 / 7) * day + (360 / 14); // center of sector
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const seconds = now.getSeconds();
+        
+        // Calculate progress through the day (0 to 1)
+        const dayProgress = (hours * 3600 + minutes * 60 + seconds) / (24 * 3600);
+        
+        // Calculate the angle within the day's sector
+        const sectorStart = (360 / 7) * day;
+        const sectorWidth = 360 / 7;
+        const angle = sectorStart + (sectorWidth * dayProgress);
+        
         document.getElementById("dayHand").style.transform = `rotate(${angle}deg)`;
       }
 
       updatePointer();
+      
     </script>
   </div>
 
